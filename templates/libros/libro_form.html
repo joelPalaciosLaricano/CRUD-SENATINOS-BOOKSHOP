@@ -6,6 +6,12 @@
     <title>Formulario de Libro</title>
 </head>
 <body>
-    
+    <h1>Ingresa o edita Libros</h1>
+    <form method="post" action="{% url 'libro_create' %}">
+        {% csrf_token %}
+        {{ form.as        <a hef="{% url 'libro_list' %}">Cancelar</a>_p }}
+
+        ><button type="submit">Guardar</button>
+    </form>
 </body>
 </html>
