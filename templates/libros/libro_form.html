@@ -9,8 +9,8 @@
     <h1>Ingresa o edita Libros</h1>
     <form method="post" action="{% url 'libro_create' %}">
         {% csrf_token %}
-        {{ form.as        <a hef="{% url 'libro_list' %}">Cancelar</a>_p }}
-
+        {{ form.as_p }}
+        <a hef="{% url 'libro_list' %}">Cancelar</a>
         ><button type="submit">Guardar</button>
     </form>
 </body>
