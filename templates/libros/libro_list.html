@@ -11,12 +11,16 @@
         <input type="text" name="q" placeholder="Buscar título o autor" value="{{ request.GET.search }}">
         <button type="submit">Buscar</button>
     </form>
-    <ul>
-        {% for libro in libros %}
-            <li>{{ libro.titulo }} por {{ libro.autor }}</li>
-        {% empty %}
-            <li>No se encontraron libros.</li>
-        {% endfor %}
-    </ul>
+    {% if object_list %}
+        <ul>
+            {% for libro in libros %}
+                <li>{{ libro.titulo }} por {{ libro.autor }}</li>
+            {% empty %}
+                <li>No se encontraron libros.</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se encontraron resultados.</p>
+    {% endif %}
 </body>
 </html>
