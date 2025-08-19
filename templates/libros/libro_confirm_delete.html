@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminalo o no</title>
+</head>
+<body>
+    <h1>¿Desea eliminar el libro "{{ libro.titulo }}"?</h1>
+    <form method="post" action="{% url 'libro_delete' libro.id %}">
+        {% csrf_token %}
+        <p>Esta acción no se puede deshacer.</p>
+        <button type="submit">Confirmar</button>    
+        <a href="{% url 'libro_list' %}">Cancelar</a>
+    </form>
+</body>
+</html>
