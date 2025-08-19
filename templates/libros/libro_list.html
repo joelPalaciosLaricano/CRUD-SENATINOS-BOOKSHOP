@@ -7,10 +7,39 @@
 </head>
 <body>
     <h1>Lista de Libros</h1>
+    <p><a href="{% url 'libro_create' %}">Agregar Nuevo Libro</a></p>
+
     <form method="get" action="{% url 'libro_list' %}"  >
         <input type="text" name="q" placeholder="Buscar título o autor" value="{{ request.GET.search }}">
         <button type="submit">Buscar</button>
     </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Género</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for libro in object_list %}
+                <tr>
+                    <td>{{ libro.titulo }}</td>
+                    <td>{{ libro.autor }}</td>
+                    <td>{{ libro.genero }}</td>
+                    <td>{{ libro.fecha_publicacion }}</td>
+                    <td>
+                        <a href="{% url 'libro_update' libro.id %}">Editar</a> |
+                        <a href="{% url 'libro_delete' libro.id %}">Eliminar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
     {% if object_list %}
         <ul>
             {% for libro in libros %}
