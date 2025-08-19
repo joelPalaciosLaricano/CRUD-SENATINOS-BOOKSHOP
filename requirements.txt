@@ -1,0 +1,17 @@
+# Framework principal
+Django>=4.2,<5.0
+
+# Base de datos (SQLite por defecto, PostgreSQL opcional)
+psycopg2-binary>=2.9.9 ; platform_system != "Windows"
+
+# Herramientas de testing
+pytest>=8.0.0
+pytest-django>=4.8.0
+pytest-cov>=5.0.0
+
+# Formateo y calidad de código
+black>=24.0.0
+flake8>=7.0.0
+
+# Archivos de entorno
+python-dotenv>=1.0.1

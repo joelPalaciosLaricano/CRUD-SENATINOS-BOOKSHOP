@@ -1,0 +1,17 @@
+# Archivos y carpetas de Python
+*.pyc
+__pycache__/
+venv/
+.venv/
+
+# Archivos de Django y bases de datos
+db.sqlite3
+media/
+
+# Archivos de entorno
+.env
+*.json
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
