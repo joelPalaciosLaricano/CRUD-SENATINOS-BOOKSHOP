@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear cuenta</title>
+    <!-- CSS de tu proyecto -->
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body>
+    <div class="container">
+        <!-- Lado izquierdo con imagen -->
+        <div class="left-side">
+            <img src="{% static 'img/libros.jpg' %}" alt="Imagen de libros">
+        </div>
+
+        <!-- Lado derecho con formulario -->
+        <div class="right-side">
+            <form method="post" class="login-form">
+                {% csrf_token %}
+                <h2>Crear cuenta</h2>
+
+                {% if form.errors %}
+                    <div class="alert">
+                        <ul>
+                            {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                <!-- Username -->
+                <label for="id_username">Nombre de usuario</label>
+                {{ form.username }}
+
+                <!-- Password -->
+                <label for="id_password1">Contraseña</label>
+                {{ form.password1 }}
+
+                <!-- Confirmación -->
+                <label for="id_password2">Confirmar contraseña</label>
+                {{ form.password2 }}
+
+                <button type="submit">Registrarme</button>
+
+                <p class="register-text">
+                    ¿Ya tienes cuenta?  
+                    <a href="{% url 'login' %}">Inicia sesión aquí</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -4,16 +4,23 @@ Django settings for libreria project.
 
 import os
 from pathlib import Path
+from django.contrib.messages import constants as messages
 
-# Ruta base del proyecto
+# ---------------------------
+# RUTA BASE
+# ---------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Seguridad
+# ---------------------------
+# SEGURIDAD
+# ---------------------------
 SECRET_KEY = "django-insecure-cambia-esta-clave-en-produccion"
 DEBUG = True
 ALLOWED_HOSTS = []
 
-# Aplicaciones instaladas
+# ---------------------------
+# APLICACIONES INSTALADAS
+# ---------------------------
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -24,7 +31,9 @@ INSTALLED_APPS = [
     "libros",  # Nuestra app de gestión de libros
 ]
 
-# Middleware
+# ---------------------------
+# MIDDLEWARE
+# ---------------------------
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -35,13 +44,19 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# Rutas principales
+# ---------------------------
+# URLS PRINCIPALES
+# ---------------------------
 ROOT_URLCONF = "libreria.urls"
 
+# ---------------------------
+# TEMPLATES
+# ---------------------------
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],  # Carpeta global de templates
+        # Aquí busca primero en /templates/ global y luego en cada app
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -56,7 +71,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "libreria.wsgi.application"
 
-# Base de datos (SQLite por defecto)
+# ---------------------------
+# BASE DE DATOS
+# ---------------------------
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -64,7 +81,9 @@ DATABASES = {
     }
 }
 
-# Validaciones de password
+# ---------------------------
+# VALIDACIÓN DE CONTRASEÑAS
+# ---------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -72,19 +91,46 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# Configuración de idioma y zona horaria
+# ---------------------------
+# LOCALIZACIÓN
+# ---------------------------
 LANGUAGE_CODE = "es"
 TIME_ZONE = "America/Lima"
 USE_I18N = True
 USE_TZ = True
 
-# Archivos estáticos
+# ---------------------------
+# ARCHIVOS ESTÁTICOS
+# ---------------------------
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-# Archivos subidos por usuarios (si se necesitan imágenes de libros)
+# ---------------------------
+# ARCHIVOS DE USUARIOS
+# ---------------------------
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-# Default primary key
+# ---------------------------
+# PRIMARY KEY POR DEFECTO
+# ---------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# ---------------------------
+# AUTENTICACIÓN Y MENSAJES
+# ---------------------------
+LOGIN_REDIRECT_URL = "libros:libro-list"   # después de login
+LOGOUT_REDIRECT_URL = "libros:login"       # después de logout
+
+MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
+
+# Bootstrap-friendly message tags
+MESSAGE_TAGS = {
+    messages.DEBUG: "secondary",
+    messages.INFO: "info",
+    messages.SUCCESS: "success",
+    messages.WARNING: "warning",
+    messages.ERROR: "danger",
+}
+
+STATIC_URL = '/static/'

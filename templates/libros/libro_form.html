@@ -1,18 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Libro</title>
-</head>
-<body>
-    <h1>Ingresa o edita Libros</h1>
-    <form method="post" action="{% url 'libro_create' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <a hef="{% url 'libro_list' %}">Cancelar</a>
-        ><button type="submit">Guardar</button>
-    </form>
-    <p><a href="{% url 'libro_list' %}">Volver a la lista</a></p>
-</body>
-</html>
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ form.instance.pk|yesno:"Editar Libro,Agregar Libro" }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-primary text-white text-center rounded-top">
+                    {{ form.instance.pk|yesno:"✏️ Editar Libro,➕ Nuevo Libro" }}
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="id_titulo" class="form-label">📖 Título</label>
+                            {{ form.titulo }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_autor" class="form-label">✍️ Autor</label>
+                            {{ form.autor }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_genero" class="form-label">🏷️ Género</label>
+                            {{ form.genero }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_fecha_publicacion" class="form-label">📅 Fecha de Publicación</label>
+                            {{ form.fecha_publicacion }}
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'libros:libro-list' %}" class="btn btn-outline-secondary">
+                                ❌ Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                💾 Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

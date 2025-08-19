@@ -1,55 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Libro</title>
-</head>
-<body>
-    <h1>Lista de Libros</h1>
-    <p><a href="{% url 'libro_create' %}">Agregar Nuevo Libro</a></p>
+{% extends "base.html" %}
 
-    <form method="get" action="{% url 'libro_list' %}"  >
-        <input type="text" name="q" placeholder="Buscar título o autor" value="{{ request.GET.search }}">
-        <button type="submit">Buscar</button>
-    </form>
+{% block content %}
+    <h2 class="mb-4 text-center">📚 Lista de Libros Disponibles</h2>
 
-    <table>
-        <thead>
+    <!-- Fila con Botón y Buscador -->
+    <div class="row mb-4">
+        {% if user.is_authenticated %}
+        <div class="col-auto">
+            <a class="btn btn-success" href="{% url 'libros:libro-create' %}">➕ Nuevo Libro</a>
+        </div>
+        {% endif %}
+
+        <div class="col">
+            <form class="d-flex" method="get" action="{% url 'libros:libro-list' %}">
+                <input class="form-control me-2" type="search" name="q" placeholder="Buscar libro o autor..." value="{{ q }}">
+                <button class="btn btn-outline-dark" type="submit">Buscar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabla de libros -->
+    <table class="table table-striped align-middle">
+        <thead class="table-dark text-center">
             <tr>
-                <th>Título</th>
-                <th>Autor</th>
-                <th>Género</th>
-                <th>Fecha</th>
-                <th>Acciones</th>
+                <th>
+                    <a class="text-white text-decoration-none" 
+                       href="?orden=titulo&dir={% if direccion == 'asc' %}desc{% else %}asc{% endif %}{% if q %}&q={{ q }}{% endif %}">
+                        📖 Título
+                        {% if orden == "titulo" %}
+                            {% if direccion == "asc" %}⬆️{% else %}⬇️{% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a class="text-white text-decoration-none" 
+                       href="?orden=autor&dir={% if direccion == 'asc' %}desc{% else %}asc{% endif %}{% if q %}&q={{ q }}{% endif %}">
+                        ✍️ Autor
+                        {% if orden == "autor" %}
+                            {% if direccion == "asc" %}⬆️{% else %}⬇️{% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a class="text-white text-decoration-none" 
+                       href="?orden=genero&dir={% if direccion == 'asc' %}desc{% else %}asc{% endif %}{% if q %}&q={{ q }}{% endif %}">
+                        🎭 Género
+                        {% if orden == "genero" %}
+                            {% if direccion == "asc" %}⬆️{% else %}⬇️{% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+                <th>📅 Fecha de Publicación</th>
+                <th>⚙️ Acciones</th>
             </tr>
         </thead>
         <tbody>
-            {% for libro in object_list %}
-                <tr>
-                    <td>{{ libro.titulo }}</td>
-                    <td>{{ libro.autor }}</td>
-                    <td>{{ libro.genero }}</td>
-                    <td>{{ libro.fecha_publicacion }}</td>
-                    <td>
-                        <a href="{% url 'libro_update' libro.id %}">Editar</a> |
-                        <a href="{% url 'libro_delete' libro.id %}">Eliminar</a>
-                    </td>
-                </tr>
+            {% for libro in libros %}
+            <tr>
+                <td>{{ libro.titulo }}</td>
+                <td>{{ libro.autor }}</td>
+                <td>{{ libro.genero }}</td>
+                <td class="text-center">{{ libro.fecha_publicacion|date:"d/m/Y" }}</td>
+                <td class="text-center">
+                    <a class="btn btn-sm btn-primary" href="{% url 'libros:libro-update' libro.id %}">✏️ Editar</a>
+                    <a class="btn btn-sm btn-danger" href="{% url 'libros:libro-delete' libro.id %}">🗑️ Eliminar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No hay libros registrados</td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
-
-    {% if object_list %}
-        <ul>
-            {% for libro in libros %}
-                <li>{{ libro.titulo }} por {{ libro.autor }}</li>
-            {% empty %}
-                <li>No se encontraron libros.</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No se encontraron resultados.</p>
-    {% endif %}
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Librería</title>
+</head>
+<body>
+    <h1>📚 Bienvenido {{ request.user.username }}</h1>
+
+    <h2>Lista de libros</h2>
+    <ul>
+        {% for libro in libros %}
+            <li>
+                <strong>{{ libro.titulo }}</strong> - {{ libro.autor }}
+                (<a href="{% url 'libros:libro-update' libro.id %}">Editar</a> |
+                 <a href="{% url 'libros:libro-delete' libro.id %}">Eliminar</a>)
+            </li>
+        {% empty %}
+            <li>No hay libros registrados.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'libros:libro-create' %}">➕ Agregar libro</a>
+    <br>
+    <a href="{% url 'logout' %}">🚪 Cerrar sesión</a>
+</body>
+</html>

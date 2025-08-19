@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <!-- CSS desde static -->
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body>
+    <div class="container">
+        <!-- Lado izquierdo con imagen -->
+        <div class="left-side">
+            <img src="{% static 'img/libros.jpg' %}" alt="img">
+        </div>
+
+        <!-- Lado derecho con formulario -->
+        <div class="right-side">
+            <form method="post" class="login-form">
+                {% csrf_token %}
+                <h2>Iniciar Sesión</h2>
+
+                <!-- Mensajes de Django -->
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Errores del formulario -->
+                {% if form.errors %}
+                    <div class="alert error">
+                        Usuario o contraseña incorrectos
+                    </div>
+                {% endif %}
+
+                <label for="id_username">Usuario</label>
+                {{ form.username }}
+
+                <label for="id_password">Contraseña</label>
+                {{ form.password }}
+
+                <button type="submit">Entrar</button>
+
+                <!-- Enlace a registro -->
+                <p class="register-text">
+                    ¿No tienes cuenta?  
+                    <a href="{% url 'register' %}">Regístrate aquí</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
