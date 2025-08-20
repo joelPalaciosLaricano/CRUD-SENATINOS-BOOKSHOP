@@ -88,4 +88,4 @@ CRUD-SENATINOS-BOOKSHOP/
 
 ---
 
-**Autor: Yo y El**
+**Autor: Evor y Joel**
